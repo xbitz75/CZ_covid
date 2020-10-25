@@ -5,12 +5,15 @@ import (
 	"fmt"
 	"image/color"
 	"log"
+	"os"
 	"time"
 
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
 	"gonum.org/v1/plot/vg"
 )
+
+const graphDir = ".\\graphs"
 
 type cumulativeJSON struct {
 	Modified time.Time
@@ -125,7 +128,12 @@ func (c *cumulativeColection) plot(title string, yLabel string, inputData []int,
 
 	p.Add(line)
 
-	err = p.Save(10*vg.Centimeter, 5*vg.Centimeter, filename)
+	filepath := fmt.Sprintf("%s\\%s", graphDir, filename)
+	if _, err := os.Stat(graphDir); os.IsNotExist(err) {
+		os.Mkdir(graphDir, 0755)
+	}
+
+	err = p.Save(10*vg.Centimeter, 5*vg.Centimeter, filepath)
 	if err != nil {
 		log.Panic(err)
 	}
