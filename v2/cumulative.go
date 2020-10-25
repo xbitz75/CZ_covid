@@ -92,7 +92,7 @@ func (c *cumulativeColection) plotInfected() {
 func (c *cumulativeColection) plot(title string, yLabel string, inputData []int, filename string) {
 	xticks := plot.TimeTicks{Format: "2006-01-02"}
 
-	generateDeathsData := func() plotter.XYs {
+	generatePlotReadyData := func() plotter.XYs {
 		const (
 			hour = 1
 			min  = 1
@@ -109,7 +109,7 @@ func (c *cumulativeColection) plot(title string, yLabel string, inputData []int,
 		return pts
 	}
 
-	data := generateDeathsData()
+	data := generatePlotReadyData()
 
 	p, err := plot.New()
 	if err != nil {
